@@ -1,38 +1,51 @@
 import React, { useState } from 'react'
 import Input from './Input'
 import Boton from './Boton'
+import Swal from 'sweetalert2' 
+
 function Formulario() {
   const [datos, setDatos] = useState({
     nombre: '',
     email: '',
-    tel: '',  
-    text: '' 
+    tel: '',
+    text: ''
   })
+
   const handleInputChange = (e) => {
     setDatos({
       ...datos,
       [e.target.name]: e.target.value
     })
   }
+
   const handleSubmit = (e) => {
-    e.preventDefault()
-    alert(
-      `Formulario enviado\n` +
-      `Nombre: ${datos.nombre}\n` +
-      `Email: ${datos.email}\n` +
-      `Celular: ${datos.tel}\n` +
-      `Mensaje: ${datos.text}`
-    )
+    e.preventDefault()    
+    Swal.fire({
+      title: '¡Formulario enviado con éxito!',
+      html: `
+        <div style="text-align: left margin-top: 10px">
+          <p><strong>Nombre:</strong> ${datos.nombre}</p>
+          <p><strong>Email:</strong> ${datos.email}</p>
+          <p><strong>Celular:</strong> ${datos.tel}</p>
+          <p><strong>Mensaje:</strong> ${datos.text}</p>
+        </div>
+      `,
+      icon: 'success',
+      confirmButtonText: 'Entendido',
+      confirmButtonColor: '#4a90e2', 
+    })
     setDatos({
       nombre: '',
       email: '',
       tel: '',
       text: ''
-    });
+    })
   }
+
   return (
     <form onSubmit={handleSubmit} className="mi-formulario">
       <h2>Formulario de Contacto</h2>
+      
       <Input 
         label="Nombre Completo:"
         type="text"
@@ -73,4 +86,5 @@ function Formulario() {
     </form>
   )
 }
+
 export default Formulario
